@@ -16,7 +16,7 @@
 <body>
 
     <!--creating a canva element for the chart.hs -->
-    <canvas id='chart' width="400" height="400"></canvas>
+    <canvas id='chart' width="800" height="600"></canvas>
 
     <script>
         const xlabels = [];
@@ -24,7 +24,6 @@
 
 
         chartIt();
-
         async function chartIt() {
             await getData();
             const ctx = document.getElementById('chart').getContext('2d');
@@ -33,13 +32,13 @@
                 data: {
                     labels: xlabels,
                     datasets: [{
-                        label:'Global Average temperature',
+                        label: 'Combined Land-Surface Air and Sea-Surface Water Temperature °C',
                         data: ytemps,
-                        backgroundColor: 
-                            'rgba(255, 99, 132, 0.2)'
+                        backgroundColor:
+                            'rgba(43,140,190)'
                         ,
                         borderColor: [
-                            'rgba(255, 99, 132, 1)'
+                            'rgba(43,140,190)'
                         ],
                         borderWidth: 1
                     }]
@@ -47,15 +46,18 @@
                 options: {
                     scales: {
                         y: {
-                            beginAtZero: true
+                            ticks: {
+                                callback: function (value, index, ticks) {
+                                    return value + '°'
+                                }
+
+                            },
+                            beginAtZero: false
                         }
                     }
                 }
             });
         }
-
-
-
 
 
         // function for getting the data
@@ -68,15 +70,14 @@
 
             // parsing the data
             const table = data.split('\n').slice(1); // with split function and withh slice we start from the 2nd row
-            
+
             table.forEach(elt => {
                 const columns = elt.split(',');
                 const year = columns[0];
                 xlabels.push(year);
 
                 const temp = columns[1];
-                ytemps.push(temp);
-                console.log(year, temp);
+                ytemps.push(parseFloat(temp) + 14);
             })
 
         }
