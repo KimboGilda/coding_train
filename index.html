@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="">
+    </head>
+    <body>
+        <img src="" id = "rainbow" width="480px">
+        <script>
+            console.log("About to fetch bako's image")
+
+
+        // we can use a function to habdle fetch with async
+        // important to note here is that we need also to use await before any async fuction, such as fetch
+        async function catchRainbow() {
+            const response = await fetch("img/rainbow.jpg");
+            const blob = await response.blob();
+            document.getElementById("rainbow").src = URL.createObjectURL(blob);
+
+        }
+
+        catchRainbow()
+        .then(response => {
+            console.log("let's go");
+        })
+        // error handling
+        .catch(error => {
+                console.log('error !!')
+                console.log(error)
+            });;
+
+            // how to call fetch
+            // fetch("img/rainbow.jpg").then(response => {
+            //     console.log(response);
+            //     return response.blob().then(blob => {
+            //         console.log(blob);
+
+            //     document.getElementById("rainbow").src = URL.createObjectURL(blob); //we need this function to transform the blob into an acceptable format
+            //     });
+            // })
+            // error handling
+            // we can put it here at the very end
+            // .catch(error => {
+            //     console.log('error !!')
+            //     console.log(error)
+            // });
+        </script>
+    </body>
+</html>
